@@ -13,9 +13,13 @@ The performance comparison is evaluated on the test log-likelihood under each mo
 Furthermore, prediction intervals are constructed from each model and evaluated on 2 metrics. 
 
 The datasets options are: `concrete, energy, housing, wine, yacht`.
-The model options are: `ngboost, subRF, mc`.
+The model options are: `ngboost, mc`.
 Alpha is the parameter used to define confidence level := 1-α
-The experiment is done by executing in shell the following command:
+The experiment is done by two scripts.
+
+For the python script, executing in shell the following command:
 `./test_model -data <dataset_option> -nf <number_of_testing_folds> -model <model_option> -a <alpha>`
 
+For the R script, `cd` to the "subsampled Random Forest" folder and execute in shell the following command:
+`./testing_script.R`
 
