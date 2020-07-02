@@ -53,15 +53,16 @@ def test_mc_dropout(X_train, y_train,
 
         # Predict 1. Monte Carlo samples, 2. log-likelihood for each datapoint from the T samples
         Yt_hat, ll= best_network.predict(X_test, y_test)
+        T = Yt_hat.shape[0]
+        
         # Mean prediction
         MC_pred = np.mean(Yt_hat, 0)
-        T = MC_pred.shape[0]
         
         # Variance for each prediction
         Var = np.ndarray(shape=(Yt_hat.shape[1]))
         for datapoint in range(Yt_hat.shape[1]):
-            Eyy= 1/T* np.mean( np.dot(np.transpose(Yt_hat[:,datapoint,:]), Yt_hat[:,datapoint,:]), 0)
-            EyEy = 1/T* np.dot( np.transpose(np.mean(Yt_hat[:,datapoint,:], 0)), np.mean(Yt_hat[:,datapoint,:], 0) )
+            Eyy= 1/T * Yt_hat[:,datapoint,0].transpose() @ Yt_hat[:,datapoint,0]
+            EyEy = MC_pred[datapoint,0]**2
             Var[datapoint]= float(1/best_tau  + Eyy - EyEy)
 
         # Model Metrics
